@@ -5,8 +5,8 @@
 </template>
 
 <script>
-import { Synth, Delay } from "tone";
-import dictionary from "@/lib/noteDictionary";
+import { Synth, Delay } from 'tone';
+import dictionary from '@/lib/noteDictionary';
 export default {
   props: {
     octave: Number,
@@ -19,8 +19,8 @@ export default {
     };
   },
   mounted() {
-    window.addEventListener("keyup", (e) => {
-      if (e.key === "k") {
+    window.addEventListener('keyup', (e) => {
+      if (e.key === 'k') {
         this.oct = this.octave + 1;
       } else {
         this.oct = this.octave;
@@ -42,13 +42,16 @@ export default {
   },
   methods: {
     handleClick() {
-      this.synth.triggerAttackRelease(this.noteAndOctave, "8n");
+      this.synth.triggerAttackRelease(
+        this.note.toUpperCase() + this.octave,
+        '8n'
+      );
     },
     handleKey(e) {
       if (this.dictionary[e.key]) {
         this.synth.triggerAttackRelease(
           this.dictionary[e.key].toUpperCase() + this.oct,
-          "8n"
+          '8n'
         );
       }
     }, //
