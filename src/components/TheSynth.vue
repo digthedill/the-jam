@@ -1,5 +1,7 @@
 <template>
-  <button @click="handleClick">C L I C K</button>
+  <button @click="handleClick">
+    {{ note }}
+  </button>
 </template>
 
 <script>
@@ -8,6 +10,7 @@ import dictionary from "@/lib/noteDictionary";
 export default {
   props: {
     octave: Number,
+    note: String,
   },
   data() {
     return {
@@ -17,10 +20,8 @@ export default {
   },
   mounted() {
     window.addEventListener("keyup", (e) => {
-      //this octave handling is not working...
-      //not sure at the moment
       if (e.key === "k") {
-        this.oct += 1;
+        this.oct = this.octave + 1;
       } else {
         this.oct = this.octave;
       }
