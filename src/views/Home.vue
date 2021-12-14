@@ -7,19 +7,19 @@
       :note="note"
       :octave="4"
     >
-
     </the-synth>
   </div>
 </template>
 
 <script>
-import TheSynth from "@/components/TheSynth.vue";
+import TheSynth from '@/components/TheSynth.vue';
 export default {
   components: { TheSynth },
-  name: "Home",
+  name: 'Home',
   data() {
     return {
-      notes: ["a", "b", "c", "d", "e", "f", "g"],
+      notes: ['a', 'b', 'c', 'd', 'e', 'f', 'g'],
+      currentNote: null,
     };
   },
 };

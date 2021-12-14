@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import { Synth } from "tone";
+import { Synth, Delay } from "tone";
 import dictionary from "@/lib/noteDictionary";
 export default {
   props: {
@@ -31,6 +31,9 @@ export default {
 
   created() {
     this.synth = new Synth().toDestination();
+    this.synth.volume.value = -3;
+    this.delay = new Delay(0.4, 8).toDestination();
+    this.synth.connect(this.delay);
   },
   computed: {
     noteAndOctave() {
