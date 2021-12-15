@@ -18,7 +18,7 @@ export default {
   name: 'Home',
   data() {
     return {
-      notes: ['c', 'd', 'e', 'f', 'g', 'a', 'b'],
+      notes: ['c', 'c#', 'd', 'd#', 'e', 'f', 'f#', 'g', 'g#', 'a', 'a#', 'b'],
       currentNote: null,
     };
   },
