@@ -8,7 +8,7 @@
 // TODO: why does the key bound note play louder/more velocity than the button clicks?
 // add a remove event listner to the window element
 
-import { Synth, Delay } from 'tone';
+import { Synth } from 'tone';
 import dictionary from '@/lib/noteDictionary';
 export default {
   props: {
@@ -31,12 +31,13 @@ export default {
       this.handleKey(e);
     });
   },
-
+  beforeUnmount() {
+    //call the remove e listener here
+  },
   created() {
     this.synth = new Synth().toDestination();
     this.synth.volume.value = -3;
-    this.delay = new Delay(0.4, 8).toDestination();
-    this.synth.connect(this.delay);
+   
   },
   computed: {
     noteAndOctave() {
