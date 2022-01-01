@@ -16,7 +16,7 @@ import TheKey from '@/components/TheKey.vue';
 
 export default {
   components: { TheKey },
-
+  emits: ['setCurrentNote'],
   data() {
     return {
       dictionary,
@@ -36,17 +36,22 @@ export default {
   },
   methods: {
     handleKey(e) {
-      console.log('anything?');
-      if (this.dictionary[e.key]) {
-        this.synth.triggerAttackRelease(
-          this.dictionary[e.key].toUpperCase() + this.octave,
-          '8n'
-        );
+      const note = this.dictionary[e.key]?.toUpperCase();
+      //TODO -- add dynamic octave selection
+      if (e.key === 'k') {
+        this.octave = 5;
+      } else {
+        this.octave = 4;
       }
+      this.$emit('setCurrentNote', note);
+      if (this.dictionary[e.key]) {
+        this.synth.triggerAttackRelease(note + this.octave, '8n');
+      }
+      return;
     },
-    handleClick(n) {
-      console.log('anything?');
-      this.synth.triggerAttackRelease(n + this.octave, '8n');
+    handleClick(note) {
+      this.$emit('setCurrentNote', note);
+      this.synth.triggerAttackRelease(note + this.octave, '8n');
     },
   },
 };

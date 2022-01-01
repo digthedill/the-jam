@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     <h1>Super Duper Synth</h1>
-    <the-synth />
+    <the-synth @set-current-note="setCurrentNote" />
   </div>
 </template>
 
@@ -14,6 +14,11 @@ export default {
     return {
       currentNote: null,
     };
+  },
+  methods: {
+    setCurrentNote(note) {
+      this.currentNote = note;
+    },
   },
 };
 </script>
