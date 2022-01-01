@@ -5,6 +5,7 @@
 </template>
 
 <script>
+//octave doen't change for the last C
 export default {
   props: {
     note: String,

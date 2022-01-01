@@ -2,6 +2,7 @@
   <div class="home">
     <h1>Super Duper Synth</h1>
     <the-synth @set-current-note="setCurrentNote" />
+    {{currentNote}}
   </div>
 </template>
 
