@@ -1,13 +1,7 @@
 <template>
   <div class="home">
-    <h1>hello world</h1>
-    <the-synth
-      v-for="note in notes"
-      :key="note"
-      :note="note"
-      :octave="4"
-    >
-    </the-synth>
+    <h1>Super Duper Synth</h1>
+    <the-synth />
   </div>
 </template>
 
@@ -18,7 +12,6 @@ export default {
   name: 'Home',
   data() {
     return {
-      notes: ['c', 'c#', 'd', 'd#', 'e', 'f', 'f#', 'g', 'g#', 'a', 'a#', 'b'],
       currentNote: null,
     };
   },

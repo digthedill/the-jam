@@ -1,64 +1,53 @@
 <template>
-  <button @click="handleClick">
-    {{ note }}
-  </button>
+  <the-key
+    v-for="(note, i) in notes"
+    :key="`${note}${i}`"
+    :note="note"
+    :octave="octave"
+    @click-note="handleClick"
+  />
 </template>
 
 <script>
-// TODO: why does the key bound note play louder/more velocity than the button clicks?
-// add a remove event listner to the window element
-
 import { Synth } from 'tone';
+
 import dictionary from '@/lib/noteDictionary';
+import TheKey from '@/components/TheKey.vue';
+
 export default {
-  props: {
-    octave: Number,
-    note: String,
-  },
+  components: { TheKey },
+
   data() {
     return {
       dictionary,
-      oct: this.octave,
+      octave: 4,
+      notes: Object.values(dictionary),
     };
   },
   mounted() {
     window.addEventListener('keyup', (e) => {
-      if (e.key === 'k') {
-        this.oct = this.octave + 1;
-      } else {
-        this.oct = this.octave;
-      }
       this.handleKey(e);
     });
   },
-  beforeUnmount() {
-    //call the remove e listener here
-  },
   created() {
-    this.synth = new Synth().toDestination();
-    this.synth.volume.value = -3;
-   
-  },
-  computed: {
-    noteAndOctave() {
-      return this.dictionary[this.note].toUpperCase() + this.octave;
-    },
+    this.synth = new Synth({
+      volume: 0.5,
+    }).toDestination();
   },
   methods: {
-    handleClick() {
-      this.synth.triggerAttackRelease(
-        this.note.toUpperCase() + this.octave,
-        '8n'
-      );
-    },
     handleKey(e) {
+      console.log('anything?');
       if (this.dictionary[e.key]) {
         this.synth.triggerAttackRelease(
-          this.dictionary[e.key].toUpperCase() + this.oct,
+          this.dictionary[e.key].toUpperCase() + this.octave,
           '8n'
         );
       }
-    }, //
+    },
+    handleClick(n) {
+      console.log('anything?');
+      this.synth.triggerAttackRelease(n + this.octave, '8n');
+    },
   },
 };
 </script>
