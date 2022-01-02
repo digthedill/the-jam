@@ -67,11 +67,32 @@
     :octave="octave"
     @click-note="handleClick"
   />
+  <br>
+  <label for="sequencer">enter sequencer</label>
+  <input
+    type="checkbox"
+    name="sequencer"
+    id="sequencer"
+    v-model="showSequencer"
+  >
+
+  <div v-if="showSequencer">
+    <h3>The Sequencer</h3>
+    <p
+      v-for="(note, i) in sequenceNotes"
+      :key="`${note}${i}`"
+    >
+      {{note}}
+    </p>
+    <button @click="playSequence">Play</button>
+    <button @click="stopSequence">Stop</button>
+    <button @click="clearSequence">Clear</button>
+  </div>
 
 </template>
 
 <script>
-import { Synth } from 'tone';
+import { Sequence, Synth, Transport } from 'tone';
 
 import dictionary from '@/lib/noteDictionary';
 import TheKey from '@/components/TheKey.vue';
@@ -90,8 +111,10 @@ export default {
         sustain: 50,
         release: 80,
       },
+      showSequencer: false,
       oscillatorType: ['amsine', 'amsquare', 'amsawtooth', 'amtriangle'],
       oscillator: 'amsine',
+      sequenceNotes: [],
     };
   },
   mounted() {
@@ -103,6 +126,16 @@ export default {
     this.buildSynth();
   },
   methods: {
+    playSequence() {
+      this.buildSequencer();
+      Transport.start();
+    },
+    stopSequence() {
+      Transport.stop();
+    },
+    clearSequence() {
+      this.sequenceNotes = [];
+    },
     handleKey(e) {
       const note = this.dictionary[e.key]?.toUpperCase();
       //TODO -- add dynamic octave selection
@@ -115,11 +148,21 @@ export default {
       if (this.dictionary[e.key]) {
         this.synth.triggerAttackRelease(note + this.octave, '8n');
       }
+
+      if (this.showSequencer) {
+        this.sequenceNotes.push(note + this.octave);
+      }
+
       return;
     },
     handleClick(note) {
       this.$emit('setCurrentNote', note);
       this.synth.triggerAttackRelease(note + this.octave, '8n');
+    },
+    buildSequencer() {
+      this.seq = new Sequence((time, note) => {
+        this.synth.triggerAttackRelease(note, 0.1, time);
+      }, this.sequenceNotes).start(0);
     },
     buildSynth() {
       const envelope = Object.keys(this.envelope).reduce((acc, key) => {
