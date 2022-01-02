@@ -1,5 +1,4 @@
 <template>
-
   <div class="envelope">
     <label for="oscillator">oscillator</label>
     <select
@@ -80,7 +79,7 @@
     <h3>The Sequencer</h3>
     <p
       v-for="(note, i) in sequenceNotes"
-      :key="`${note}${i}`"
+      :key="`${renderNote(note)}${i}`"
     >
       {{note}}
     </p>
@@ -125,6 +124,13 @@ export default {
   created() {
     this.buildSynth();
   },
+  computed: {
+    renderNote(n) {
+      if (n === null) {
+        return 'REST';
+      } else return n;
+    },
+  },
   methods: {
     playSequence() {
       this.buildSequencer();
@@ -134,9 +140,11 @@ export default {
       Transport.stop();
     },
     clearSequence() {
+      this.seq.clear();
       this.sequenceNotes = [];
     },
     handleKey(e) {
+      Transport.start();
       const note = this.dictionary[e.key]?.toUpperCase();
       //TODO -- add dynamic octave selection
       if (e.key === 'k') {
@@ -148,11 +156,16 @@ export default {
       if (this.dictionary[e.key]) {
         this.synth.triggerAttackRelease(note + this.octave, '8n');
       }
-
-      if (this.showSequencer) {
-        this.sequenceNotes.push(note + this.octave);
+      if (
+        this.showSequencer &&
+        (Object.keys(this.dictionary).includes(e.key) || e.key === 'z')
+      ) {
+        if (e.key === 'z') {
+          this.sequenceNotes.push(null);
+        } else {
+          this.sequenceNotes.push(note + this.octave);
+        }
       }
-
       return;
     },
     handleClick(note) {
