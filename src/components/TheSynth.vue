@@ -59,13 +59,15 @@
     >
 
   </div>
-  <the-key
-    v-for="(note, i) in notes"
-    :key="`${note}${i}`"
-    :note="note"
-    :octave="octave"
-    @click-note="handleClick"
-  />
+  <div class="keyboard-container">
+    <the-key
+      v-for="(note, i) in notes"
+      :key="`${note}${i}`"
+      :note="note"
+      :octave="octave"
+      @click-note="handleClick"
+    />
+  </div>
   <br>
   <label for="sequencer">enter sequencer</label>
   <input
@@ -200,6 +202,15 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.keyboard-container {
+  background: #dfe2ea;
+  display: flex;
+  align-content: flex-start;
+  justify-content: center;
+  margin: 2rem;
+  padding: 2rem;
+  max-width: 554px;
+}
 .container {
   max-width: 600px;
   margin: auto;
