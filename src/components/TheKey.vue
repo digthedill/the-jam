@@ -48,7 +48,7 @@ export default {
 .white-key {
   width: 20px;
   height: 100px;
-  background: #fefefe;
+  background: $white;
   box-shadow: -1px -3px 4px rgba(255, 255, 255, 0.4),
     1px 3px 4px rgba(0, 0, 0, 0.25);
   border-radius: 100px;
@@ -56,12 +56,12 @@ export default {
 .black-key {
   width: 15px;
   height: 60px;
-  background: #0d0d0d;
+  background: $black;
   opacity: 0.6;
   box-shadow: -1px -3px 4px rgba(255, 255, 255, 0.4),
     1px 3px 4px rgba(0, 0, 0, 0.25);
   border-radius: 100px;
-  color: #fefefe;
+  color: $white;
 }
 
 .active-state {

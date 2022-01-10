@@ -203,7 +203,7 @@ export default {
 
 <style scoped lang="scss">
 .keyboard-container {
-  background: #dfe2ea;
+  background: $background;
   display: flex;
   align-content: flex-start;
   justify-content: center;
